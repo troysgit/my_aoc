@@ -3,7 +3,8 @@ use std::io::{self, BufRead};
 use std::path::Path;
 use std::collections::HashSet;
 
-
+// `read_lines` taken from Rust By Example at,
+// https://doc.rust-lang.org/rust-by-example/std_misc/file/read_lines.html
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
 where P: AsRef<Path>, {
     let file = File::open(filename)?;
@@ -16,7 +17,7 @@ fn main() {
     let mut col1: Vec<i32> = Vec::new();
     let mut col2: Vec<i32> = Vec::new();
     if let Ok(lines) = read_lines("inps/1.txt") {
-        for line in lines.flatten() {
+        for line in lines.map_while(Result::ok) { //lines.flatten() replace with map_while(Result::ok);
             let mut split = line.split_whitespace();
             if let (Some(w1), Some(w2)) = (split.next(), split.next()) {
                 if let (Ok(n1), Ok(n2)) = (w1.parse::<i32>(), w2.parse::<i32>()) {
