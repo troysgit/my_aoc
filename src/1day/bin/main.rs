@@ -30,41 +30,38 @@ fn main() {
         }
 
     }
-    
-    col1.sort();
-    col2.sort();
-    let abs_diff: i32 = col2.iter()
-        .zip(col1.iter())
+    dbg!(&col1);
+    dbg!(&col2);
+    let mut col1_part_one_copy = col1.clone();
+    let mut col2_part_one_copy = col2.clone();
+    let col1_part_two_copy = col1.clone();
+    let col2_part_two_copy = col2.clone();
+    part_one(&mut col1_part_one_copy, &mut col2_part_one_copy);
+    part_two(col1_part_two_copy, col2_part_two_copy);
+}
+
+fn part_one(first_col: &mut [i32], sec_col: &mut [i32]) { 
+    first_col.sort();
+    sec_col.sort();
+    let abs_diff: i32 = sec_col.iter()
+        .zip(first_col.iter())
         .map(|(a,b)| (a-b).abs())
         //.fold(0, |acc, x| acc + x);
         .sum();
     // Correct answer!
     println!("{abs_diff}");
-    //let ans1 = part_one();
-    //let ans2 = part_two();
-    
+}
 
-    // part two
-    let hash_set_l: HashSet<i32> = col1.iter().cloned().collect();
+
+fn part_two(one: Vec<i32>, two: Vec<i32>) { 
+    let hash_set_l: HashSet<i32> = one.iter().cloned().collect();
     let mut coll_ans: i32 = 0; 
     for each_val in hash_set_l {
-        let temp = col2.iter().filter(|&n| *n == each_val).count();
+        let temp = two.iter().filter(|&n| *n == each_val).count();
         let prod = temp as i32 * each_val;
         coll_ans += prod;
     }
+    // Correct answer!
     println!("{coll_ans}");
-
-
-        
-
-}
-
-fn part_one() -> Option<i32> {
-    None
-}
-
-
-fn part_two() -> Option<i32> {
-    None
 }
 
