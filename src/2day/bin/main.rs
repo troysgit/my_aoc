@@ -31,6 +31,7 @@ fn main() {
                 }
                 if valid_incr {
                     ans += 1;
+            
                 }
             
             } else if init_diff < 0 && init_diff > -4{
@@ -50,5 +51,11 @@ fn main() {
     // Wrong answer at this stage
     println!("{ans}");
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
 
 }
