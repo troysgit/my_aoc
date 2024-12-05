@@ -1,3 +1,4 @@
 /target
 /inps
 *.txt
+*.ipynb_checkpoints
