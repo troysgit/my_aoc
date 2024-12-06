@@ -10,21 +10,54 @@ fn main()-> Result<(), Box<dyn Error>> {
     //contents.chars()
     //    .for_each(|c| println!("{}", c));
     
-    let mut expression_list = Vec::new();
+    let mut expression_list: Vec<i32> = Vec::new();
     //dbg!("{contents}");
     let mut iter_chars = sample_data.chars().peekable();
     while let Some(c) = iter_chars.next() {
         match c {
-            'm' => todo!(),//check if next() is u
-            'u' => todo!(), // check if next() is l
-            'l' => todo!(), // check if next() is (
-            '(' => todo!(), //check if next is_digit()
-            ',' => todo!(), 
-            ')' => todo!(),
+            'm' => if iter_chars.clone().take(2).collect::<String>() == "ul" {
+                if let Some('(') = iter_chars.next() { 
+                    let mut first_val = String::new();
+
+                    while let Some(c) = iter_chars.next() {
+                        if c.is_digit(10) { // radix of 10
+                            first_val.push(c);
+                    } else if c == ',' {
+                        break;
+                    } else {
+                        break;
+                    }
+                }
+                let mut second_val = String::new();
+                while let Some(c) = iter_chars.next() { 
+                    if c.is_digit(10) {
+                        second_val.push(c);
+                    } else if c == ')' {
+                        break;
+                    } else {
+                        break;
+                    }
+                }
+                if !first_val.is_empty() && !second_val.is_empty() {
+                    expression_list.push(first_val.parse::<i32>().unwrap() * second_val.parse::<i32>().unwrap());
+                }
+                }
+
+            }
+            _ => println!("oh oh"),
 
         }
     }
-
+    let temp_ans: i32  = expression_list.iter().fold(0, |acc, val| acc + val);
+    println!("{temp_ans}");
     Ok(())
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    todo!();
+}
+
+
 
