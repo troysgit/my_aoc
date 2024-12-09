@@ -2,3 +2,4 @@
 /inps
 *.txt
 *.ipynb_checkpoints
+*.hs
