@@ -27,11 +27,61 @@ fn part_one(input_data: String) {
         println!("{final_step}");
 }
 
+
+fn part_two(input_data: String) -> i32 { 
+    let mut cnt = 0;
+    let mut do_mode: bool = true;
+    let tokens: i32 = 
+        input_data
+        .split(|c| c == 'd' || c == 'o')
+        .filter(|&token| !token.is_empty())
+        .map(|token| {
+            if token.contains("do()") {
+                do_mode = true;
+                return 0;
+            } else if token.contains("don't()") {
+                do_mode = false;
+                return 0;
+            } 
+            if do_mode {
+                parse_mul(token)
+            } else {
+                return 0;
+            }
+        }).sum();
+    //println!("{tokens}");
+    tokens
+}
+
+fn parse_mul(section: &str) -> i32 {
+    let ans = section
+        .split("mul(")
+        .filter_map(|part| {
+            let cleaned = part 
+                .chars()
+                .take_while(|&c| c != ')')
+                .collect::<String>();
+            cleaned
+                .split_once(',')
+                .and_then(|(a, b)| {
+                    a.trim()
+                        .parse::<i32>()
+                        .ok()
+                        .zip(b.trim().parse::<i32>().ok())
+                })
+                .map(|(a, b)| a * b) 
+            })
+        .sum();
+    ans
+}  
+
 fn main() { 
     let mut contents = String::new();
     let mut f = File::open("inps/3.txt").expect("open");
     f.read_to_string(&mut contents).expect("open again");
-    part_one(contents);
+    let part_two_inp = contents.clone();
+    //part_one(contents);
+    part_two(part_two_inp);
 }
 
 #[cfg(test)]
