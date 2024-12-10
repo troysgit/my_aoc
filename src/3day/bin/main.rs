@@ -1,5 +1,6 @@
 use std::io::Read;
 use std::fs::File;
+use std::slice::Windows;
 
 fn print_type_of<T>(_: &T) {
     println!("{}", std::any::type_name::<T>());
@@ -53,6 +54,32 @@ fn part_two(input_data: String) -> i32 {
     tokens
 }
 
+fn part_one_elegant(mut input_data: String) {
+    //let mut slice = &input_data[..];
+    let cnt: i32 = input_data
+        //.std::slice::windows(4)
+        .char_indices()
+        //.enumerate()
+        .filter_map(|(i, _)| {
+            if input_data[i..].starts_with("mul(") {
+               input_data[i+4..]
+                   .split(')')
+                   .next()
+                   .and_then(|sub| {
+                       let mut parts = sub.split(',');
+                       let a = parts.next()?.parse::<i32>().ok()?;
+                       let b = parts.next()?.parse::<i32>().ok()?;
+                       Some(a*b)
+                   })
+            } else {
+                None
+            }
+        })
+    .sum();
+    println!("{cnt}");
+}
+
+
 fn parse_mul(section: &str) -> i32 {
     let ans = section
         .split("mul(")
@@ -80,8 +107,10 @@ fn main() {
     let mut f = File::open("inps/3.txt").expect("open");
     f.read_to_string(&mut contents).expect("open again");
     let part_two_inp = contents.clone();
+    let part_one_ele_inp = contents.clone();
     //part_one(contents);
-    part_two(part_two_inp);
+    //part_two(part_two_inp);
+    part_one_elegant(part_one_ele_inp);
 }
 
 #[cfg(test)]
