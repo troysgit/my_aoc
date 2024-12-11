@@ -17,3 +17,11 @@ path = "src/2day/bin/main.rs"
 [[bin]]
 name = "3day"
 path = "src/3day/bin/main.rs"
+
+[[bin]]
+name = "4day"
+path = "src/4day/bin/main.rs"
+
+[[bin]]
+name = "5day"
+path = "src/5day/bin/main.rs"
