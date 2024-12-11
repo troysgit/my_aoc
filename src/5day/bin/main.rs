@@ -16,9 +16,9 @@ fn is_ready(ordering_rules: &[(i32,i32)], page_nums: &[i32]) -> bool {
                     return false;
                 }
             }
-            (None, None) => return true,
-            (None, Some(_second)) => return true,
-            (Some(_first), None) => return true,
+            (None, None) => continue,//return true,
+            (None, Some(_second)) => continue,//return true,
+            (Some(_first), None) => continue,//return true,
             _ => return false,
         }
     }
@@ -30,7 +30,7 @@ fn process_orders(file: String) -> Vec<(i32,i32)> {
     for line in file.lines() {
         if let Some(pos) = line.find('|') {
             let (left, right) = line.split_at(pos);
-
+            
             if let (Ok(a), Ok(b)) = (left.parse::<i32>(), right[1..].parse::<i32>()) {
                 orders.push((a,b));
             }
@@ -57,30 +57,23 @@ fn main () {
     //let sample_pages = vec![75,47,61,53,29];
     let file_content = fs::read_to_string("./inps/5.txt").unwrap();
     let file_pages_content = file_content.clone();
+
     let rules: Vec<(i32,i32)> = process_orders(file_content);
     let pages: Vec<Vec<i32>> = process_pages(file_pages_content);
     //let mut ans: bool = false;
-    let mut cnt = 0;
-    let mut count_these: Vec<Vec<i32>> = Vec::new();
+    
+    //let mut cnt = 0;
+    let mut count_these: Vec<i32> = Vec::new();
+    
     for line in pages {
-        let mut ans: bool = false;
-        ans = is_ready(&rules, &line); // is_ready takes vec<(i32,i32)> and &vec<i32> 
-        if ans {
-            cnt += 1;
-            count_these.push(line);
+        if is_ready(&rules, &line) { 
+            //cnt += 1;
+            let mid = line.len()/2;
+            let temp_val = line[mid];
+            count_these.push(temp_val);
         }
     }
-    //println!("{cnt}");
-    let mut cum_sum: i32 = 0;
-    for each in &count_these {
-        println!("{:?}", each);
-        let mid: usize = each.len()/2; 
-        let temp_val = each[mid];
-        println!("temp_val is: {}", temp_val);
-        cum_sum += temp_val;
-        println!("running sum is up to: {}", cum_sum);
-    }
-    //println!("{ans}");
-    println!("Cumulative sum is: {}", cum_sum);// answer is currently too high
+    let final_ans:i32 = count_these.into_iter().fold(0,|acc, x| acc + x);
+    println!("{final_ans}");
 }
 
