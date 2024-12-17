@@ -26,6 +26,9 @@ path = "src/4day/bin/main.rs"
 name = "5day"
 path = "src/5day/bin/main.rs"
 
+[[bin]]
+name = "7day"
+path = "src/7day/bin/main.rs"
 
 [[bin]]
 name = "9day"
