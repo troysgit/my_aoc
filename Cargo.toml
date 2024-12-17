@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 miette = "7.4.0"
+itertools = "0.13.0"
 
 [[bin]]
 name = "1day"
