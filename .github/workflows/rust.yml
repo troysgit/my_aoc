@@ -20,5 +20,6 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
-    - name: Linting
-      run: cargo clippy -- -Wclippy::pedantic
+    # Run clippy locally pre-commit for ease of applying changes
+    #- name: Linting
+    #  run: cargo clippy -- -Wclippy::pedantic
