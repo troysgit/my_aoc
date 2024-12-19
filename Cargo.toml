@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 miette = "7.4.0"
+itertools = "0.13.0"
 
 [[bin]]
 name = "1day"
@@ -25,3 +26,11 @@ path = "src/4day/bin/main.rs"
 [[bin]]
 name = "5day"
 path = "src/5day/bin/main.rs"
+
+[[bin]]
+name = "7day"
+path = "src/7day/bin/main.rs"
+
+[[bin]]
+name = "9day"
+path = "src/9day/bin/main.rs"
