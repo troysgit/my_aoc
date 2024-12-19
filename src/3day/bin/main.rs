@@ -107,9 +107,10 @@ fn main() {
     //part_two(part_two_inp);
     part_one_elegant(part_one_ele_inp);
 }
-
+/*
 #[cfg(test)]
 mod test {
     use super::*;
     todo!();
 }
+*/
